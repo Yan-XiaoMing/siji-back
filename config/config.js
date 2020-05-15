@@ -6,8 +6,17 @@ module.exports = {
         user:'root',
         password:'center135'
     },
-    securty:{
-        secretKey:'',
+    security:{
+        secretKey:'yqm666',
         expiresIn:60*60*30*24
+    },
+    log:{
+        debug:true,
+        log:{
+            path:'../log/',
+            type:'console',
+            level:'debug',
+            mask:true
+        }
     }
 }
