@@ -1,18 +1,18 @@
-const basicAuth = require('basic-auth')
+// const basicAuth = require('basic-auth')
 const jwt = require('jsonwebtoken')
 
 class Auth {
 
     get m() {
         return async (ctx, next) => {
-            const userToken = basicAuth(ctx.req);
-
-            if (!userToken || !userToken.name) {
+            const userToken = ctx.req.headers.token;
+            // console.log(userToken);
+            if (!userToken) {
                 throw new global.error.Forbbiden()
             }
             try {
                 //name是通过basicAuth传来的token
-                var decode = jwt.verify(userToken.name, global.config.security.secretKey);
+                var decode = jwt.verify(userToken, global.config.security.secretKey);
                 console.log(decode);
             } catch (error) {
                 let errMsg;
@@ -30,8 +30,10 @@ class Auth {
             //http规定身份验证机制 HttpBasicAuth
 
             ctx.auth = {
+                code:0,
                 id:decode.id,
-                name:decode.name
+                username:decode.username,
+                phone:decode.phone
             }
             await next();
         }

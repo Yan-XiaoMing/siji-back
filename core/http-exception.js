@@ -68,5 +68,5 @@ module.exports = {
     NotFound,
     AuthFailed,
     Forbbiden,
-    Server
+    ServerException
 };

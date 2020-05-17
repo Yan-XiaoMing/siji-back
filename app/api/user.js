@@ -14,7 +14,6 @@ const {RegisterValidator,LoginValidator} = require('../validators/validator');
 const {generateToken} = require('../../core/util');
 
 router.post('/test', async (ctx)=>{
-    LOG.info("123");
     ctx.body = {
         msg:"收到"
     }
@@ -34,6 +33,7 @@ router.post('/register',async (ctx)=>{
 })
 
 router.post('/login',async (ctx)=>{
+    // console.log(ctx.req.headers.token);
     const v = await new LoginValidator().validate(ctx);
     const data = {
         username:v.get('body.username'),
@@ -45,11 +45,15 @@ router.post('/login',async (ctx)=>{
     if(result){
         ctx.body={
             code:0,
-            token
+            user
         }
     }else{
        throw new global.error.ServerException();
     }
+})
+
+router.get('/checkToken', new Auth().m , async  (ctx)=>{
+    ctx.body = ctx.auth;
 })
 
 module.exports = router;
