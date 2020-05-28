@@ -8,6 +8,10 @@ const sequelize = new Sequelize(dbName,user,password,{
     port,
     logging:false,
     timezone:'+08:00',
+    dialectOptions: {
+        dateStrings: true,
+        typeCast: true
+    },
     define:{
         timestamps:false,
         paranoid:true,

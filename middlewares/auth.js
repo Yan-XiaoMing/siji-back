@@ -6,7 +6,7 @@ class Auth {
     get m() {
         return async (ctx, next) => {
             const userToken = ctx.req.headers.token;
-            // console.log(userToken);
+            console.log(userToken);
             if (!userToken) {
                 throw new global.error.Forbbiden()
             }
@@ -31,9 +31,11 @@ class Auth {
 
             ctx.auth = {
                 code:0,
-                id:decode.id,
-                username:decode.username,
-                phone:decode.phone
+                data:{
+                    id:decode.id,
+                    username:decode.username,
+                    phone:decode.phone
+                }  
             }
             await next();
         }

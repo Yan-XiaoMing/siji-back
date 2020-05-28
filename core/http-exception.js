@@ -19,9 +19,18 @@ class ParameterException extends HttpException {
 class Success extends HttpException {
     constructor(msg, errorCode) {
         super();
-        this.code = 201;
+        this.code = 0;
         this.msg = msg || 'ok'
-        this.errorCode = errorCode || 0
+        this.errorCode = errorCode || 0;
+    }
+}
+
+class Failed extends HttpException{
+    constructor(msg, errorCode) {
+        super();
+        this.code = 500;
+        this.msg = msg || 'error'
+        this.errorCode = errorCode || 10001;
     }
 }
 
@@ -65,6 +74,7 @@ module.exports = {
     HttpException,
     ParameterException,
     Success,
+    Failed,
     NotFound,
     AuthFailed,
     Forbbiden,

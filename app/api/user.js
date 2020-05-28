@@ -9,7 +9,7 @@ const {User} = require('../modules/user');
 
 const {success} = require('../lib/helper');
 
-const {RegisterValidator,LoginValidator} = require('../validators/validator');
+const {RegisterValidator,LoginValidator,PositiveIntergerValidator} = require('../validators/validator');
 
 const {generateToken} = require('../../core/util');
 
