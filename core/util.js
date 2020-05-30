@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const {IMAGE_BASE_PATH} = require('../config/config').image;
+const path = require('path');
 
 const findMembers = function (instance, {
     prefix,
@@ -60,4 +63,28 @@ function toLine(name) {
 }
 
 
-module.exports = {toLine,toHump,generateToken,findMembers};
+function isImage(filename){
+    let tempArr = filename.split(".");
+    let suffix = tempArr[tempArr.length-1];
+    if(suffix == 'jpg' || suffix == 'png' || suffix == 'jpeg' || suffix == 'svg' || suffix == 'webp' ){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+async function removeImgByName(filename){
+   await fs.unlinkSync(path.dirname(require.main.filename)+IMAGE_BASE_PATH+filename,function (error){
+        if(error){
+            console.log(error);
+            return false;
+        }
+        else{
+            return true;
+        }
+    })
+}
+
+
+module.exports = {toLine,toHump,generateToken,findMembers,isImage,removeImgByName};

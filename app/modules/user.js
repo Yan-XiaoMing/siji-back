@@ -43,6 +43,16 @@ class User extends Model{
         }
         return true;
     }
+
+    static async getAllUser(){
+        try {
+            const result = await User.findAll();
+            return result;
+        } catch (error) {
+            return false;
+            console.log(error);
+        }
+    }
 }
 
 User.init({

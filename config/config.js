@@ -18,5 +18,8 @@ module.exports = {
             level:'debug',
             mask:true
         }
+    },
+    image:{
+        IMAGE_BASE_PATH:'\\public\\upload\\'
     }
 }

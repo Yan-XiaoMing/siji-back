@@ -56,4 +56,20 @@ router.get('/checkToken', new Auth().m , async  (ctx)=>{
     ctx.body = ctx.auth;
 })
 
+router.get('/getAll',async (ctx)=>{
+    const result = User.getAllUser();
+    if(result){
+        ctx.body = {
+            code:0,
+            data:result
+        }
+    }
+    else{
+        ctx.body = {
+            code:500,
+            errMsg :'成员列表状态异常'
+        }
+    }
+})
+
 module.exports = router;

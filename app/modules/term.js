@@ -1,33 +1,81 @@
-const {Sequelize,Model} = require('sequelize');
-const {sequelize} = require('../../core/db');
+const {
+    Sequelize,
+    Model
+} = require('sequelize');
+const {
+    sequelize
+} = require('../../core/db');
 
-class Term extends Model{
+class Term extends Model {
 
+    static async createTerm(title, introduction, filename) {
+        try {
+            const result = await Term.create({
+                title,
+                introduction,
+                image: filename
+            })
+            return result;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    static async getTermList() {
+        try {
+            const result = await Term.findAll();
+            return result;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    static async removeTermByImgName(filename) {
+        try {
+            const result = await Term.destroy({
+                where: {
+                    image: filename
+                }
+            });
+            return result;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
 }
 
 Term.init({
-    id:{
-        type:Sequelize.INTEGER,
-        primaryKey:true,
-        autoIncrement:true
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     },
-    termTitle:{
-        type:Sequelize.STRING(64),
-        unique:true,
-        allowNull:false
+    title: {
+        type: Sequelize.STRING(64),
+        unique: true,
+        allowNull: false
     },
-    activityTime:{
-        type:Sequelize.DATE,
-        allowNull:false
+    introduction: {
+        type: Sequelize.STRING(255)
     },
-    termIntroduction:{
-        type:Sequelize.STRING(255)
+    image: {
+        type: Sequelize.STRING(100),
+        allowNull: false
     }
-},{
-    tableName:'term',
+}, {
+    tableName: 'term',
     sequelize
 })
 
-Term.sync({force:true}).then(()=>{
-    // console.log('Opinion sync')
+Term.sync({
+    force: false
+}).then(() => {
+    // console.log('Term sync')
 })
+
+module.exports = {
+    Term
+};
