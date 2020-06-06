@@ -4,7 +4,7 @@ const catchError = require('./middlewares/exception');
 const server = require('koa-static');
 const path = require('path');
 const {IMAGE_BASE_PATH} = require('./config/config').image;
-
+const chat = require('./chat')
 const InitManager = require('./core/init');
 
 const app = new Koa();

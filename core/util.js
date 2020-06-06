@@ -75,15 +75,29 @@ function isImage(filename){
 }
 
 async function removeImgByName(filename){
-   await fs.unlinkSync(path.dirname(require.main.filename)+IMAGE_BASE_PATH+filename,function (error){
-        if(error){
+    if(Array.isArray(filename)){
+        try {
+         filename.map(async (item)=>{
+            await fs.unlinkSync(path.dirname(require.main.filename)+IMAGE_BASE_PATH+item);
+         })
+         return true;
+        } catch (error) {
             console.log(error);
             return false;
         }
-        else{
-            return true;
-        }
-    })
+    }
+    else{
+        await fs.unlinkSync(path.dirname(require.main.filename)+IMAGE_BASE_PATH+filename,function (error){
+            if(error){
+                console.log(error);
+                return false;
+            }
+            else{
+                return true;
+            }
+        })
+    }
+  
 }
 
 

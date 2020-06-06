@@ -70,6 +70,15 @@ class Forbbiden extends HttpException {
     }
 }
 
+class DataException extends HttpException {
+    constructor(msg, errorCode) {
+        super();
+        this.msg = msg || '数据操作异常'
+        this.errorCode = errorCode || 18888
+        this.code = 555
+    }
+}
+
 module.exports = {
     HttpException,
     ParameterException,
@@ -78,5 +87,6 @@ module.exports = {
     NotFound,
     AuthFailed,
     Forbbiden,
-    ServerException
+    ServerException,
+    DataException
 };

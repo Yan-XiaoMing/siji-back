@@ -45,6 +45,37 @@ class Term extends Model {
             return false;
         }
     }
+
+    static async updateTerm(data){
+        const {id,title,introduction,image} = data;
+        if(id==null||id==undefined){
+            throw new Failed('id为空');
+        }
+        if(title==null||title==undefined){
+            throw new Failed('title为空');
+        }
+        if(introduction==null||introduction==undefined){
+            throw new Failed('introduction为空');
+        }
+        if(image==null||image==undefined){
+            throw new Failed('image为空');
+        }
+        try{
+            await Term.update({
+                title,
+                introduction,
+                image
+            },{
+                where:{
+                   id 
+                }
+            })
+        }catch(error){ 
+            console.log(error);
+            return false;
+        }
+        return true;
+    }
 }
 
 Term.init({

@@ -6,7 +6,6 @@ const {
     Term
 } = require('../modules/term')
 
-const upload = require('../../core/upload');
 
 const {
     isImage,
@@ -18,34 +17,21 @@ const {
 } = require('../lib/helper')
 
 
-router.post('/create', upload.single('image'), async (ctx) => {
-    const {
-        filename
-    } = ctx.req.file;
-    const check = isImage(filename);
-    const {
-        title,
-        introduction
-    } = ctx.req.body;
-    if (check && title && introduction) {
-        const result = await Term.createTerm(title, introduction, filename);
-        if(result){
-            ctx.body = {
-                code: 0,
-                data: result
-            }
+router.post('/create', async (ctx) => {
+    const data = ctx.request.body;
+    const {title,introduction,image} = data;
+    const result = await Term.createTerm(title, introduction, image);
+    if (result) {
+        ctx.body = {
+            code: 0,
+            data: result
         }
-        else{
-            removeImgByName(filename)
-            ctx.body ={
-                code: 500,
-                errMsg: '数据操作异常'
-            }
-        }
-      
     } else {
         removeImgByName(filename)
-        failed('参数异常');
+        ctx.body = {
+            code: 500,
+            errMsg: '数据操作异常'
+        }
     }
 })
 
@@ -62,7 +48,21 @@ router.get('/getAll', async (ctx) => {
 });
 
 router.post('/modify', async (ctx) => {
-
+    const data = ctx.request.body;
+    console.log(data);
+    const result = await Term.updateTerm(data);
+    if(result){
+        ctx.body = {
+            code:0,
+            data:'修改成功'
+        }
+    }
+    else{
+        ctx.body = {
+            coed:500,
+            errMsg:'数据更新异常'
+        }
+    }
 })
 
 router.get('/remove/:filename', async (ctx) => {
@@ -83,7 +83,7 @@ router.get('/remove/:filename', async (ctx) => {
                 errMsg: 'I/O异常,删除失败'
             }
         }
-    }else{
+    } else {
         ctx.body = {
             code: 500,
             errMsg: '数据服务异常'

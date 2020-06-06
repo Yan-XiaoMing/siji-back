@@ -37,7 +37,7 @@ class InitManager {
     }
 
     static formatDate() {
-        Date.prototype.Format = function (fmt) { //author: meizz   
+        Date.prototype.Format = function (fmt) {   
             var o = {
                 "M+": this.getMonth() + 1, //月份   
                 "d+": this.getDate(), //日   
