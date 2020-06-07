@@ -8,17 +8,19 @@ class ActivityApply extends Model{
 
         const {activityId,phone,name} = data;
 
-        const applyer =await ActivityApply.findOne({
+        const applyer =await ActivityApply.findAll({
             where:{
-                phone
+                phone,
+                activityId
             }
         })
-        if(applyer){
+        if(applyer.length){
             return false;
         }
-        return await ActivityApply.create({
-            activityId,name,phone
+        const result =  await ActivityApply.create({
+            name,activityId,phone
         })
+        return result;
     }
 
     static async getApplyByActivityId(id){
@@ -80,12 +82,11 @@ ActivityApply.init({
         allowNull:false
     },
     name:{
-        type:Sequelize.STRING(20),
+        type:Sequelize.STRING(50),
         allowNull:false
     },
     phone:{
-        type:Sequelize.STRING(30),
-        unique:true,
+        type:Sequelize.STRING(100),
         allowNull:false
     }
 },{

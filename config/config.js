@@ -20,6 +20,6 @@ module.exports = {
         }
     },
     image:{
-        IMAGE_BASE_PATH:'\\public\\upload\\'
+        IMAGE_BASE_PATH:'/public/upload/'
     }
 }
