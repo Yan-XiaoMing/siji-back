@@ -61,7 +61,7 @@ class Term extends Model {
             throw new Failed('image为空');
         }
         try{
-            await Term.update({
+           return await Term.update({
                 title,
                 introduction,
                 image

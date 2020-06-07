@@ -6,14 +6,14 @@ class Auth {
     get m() {
         return async (ctx, next) => {
             const userToken = ctx.req.headers.token;
-            console.log(userToken);
+            // console.log(userToken);
             if (!userToken) {
                 throw new global.error.Forbbiden()
             }
             try {
                 //name是通过basicAuth传来的token
                 var decode = jwt.verify(userToken, global.config.security.secretKey);
-                console.log(decode);
+                // console.log(decode);
             } catch (error) {
                 let errMsg;
                 if (error.name == 'TokenExpiredError') {
